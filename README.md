@@ -1,4 +1,6 @@
 # FACE BLUR APPLICATION
+<img src="https://github.com/TDC-Machine-Learning-AI-Club/face-blur/blob/master/example-blurred.png" width="500" height="auto">
+
 Python code to apply blur effect on faces from images and videos.
 Can be used in making content where subjects do not want to be recognized or identified.
 
