@@ -16,7 +16,7 @@ async def get_content_type(request: Request):
 
 @app.post("/local-blurrer")
 
-async def process_json(data: dict, content_type: str = Depends(get_content_type)):
+async def blur_image(data: dict, content_type: str = Depends(get_content_type)):
 
     '''
     In this route we are expecting something like this
