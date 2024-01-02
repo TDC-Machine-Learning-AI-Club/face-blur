@@ -48,10 +48,10 @@ class FaceBlurrer:
         '''
     
 
-    def save_result(self, output_directory='images/output', prefix='blurred_image') -> str:
+    def save_result(self, file_extension, output_directory='images/output', prefix='blurred_image') -> str:
         # Generate a unique filename using uuid.uuid4()
         image_uuid : str = uuid.uuid4()
-        unique_filename = f"{prefix}_{image_uuid}.png"
+        unique_filename = f"{prefix}_{image_uuid}{file_extension}"
         output_path = os.path.join(output_directory, unique_filename)
         
         cv2.imwrite(output_path, self.img)
