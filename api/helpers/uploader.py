@@ -15,7 +15,7 @@ supabase: Client = create_client(STORAGE_URL, SUPABASE_API_KEY)
 
 def upload_image_files(filepath):
     content_type = get_mime_type(filepath)
-    #logging.disable(sys.maxsize)
+    logging.disable(sys.maxsize)
     file_name = filepath.rsplit('/', 1)[-1]
     with open(filepath, 'rb') as f:
 
