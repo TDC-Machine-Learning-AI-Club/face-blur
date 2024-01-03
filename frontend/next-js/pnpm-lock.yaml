@@ -164,9 +164,6 @@ dependencies:
   server-only:
     specifier: ^0.0.1
     version: 0.0.1
-  tanzanian-phone-validator:
-    specifier: ^1.1.5
-    version: 1.1.5
   zod:
     specifier: link:@hookform/resolvers/zod
     version: 3.22.4
@@ -6445,10 +6442,6 @@ packages:
     transitivePeerDependencies:
       - ts-node
     dev: true
-
-  /tanzanian-phone-validator@1.1.5:
-    resolution: {integrity: sha512-/2L+ek56bitZbbXkdUoCCbC+44cagPcusu2Vg/tBjHdd1/nKrMcmUFlwFqODUrYH8s5kpTuM9IXqmvHBxSiStA==}
-    dev: false
 
   /tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}

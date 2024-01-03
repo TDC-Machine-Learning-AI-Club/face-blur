@@ -70,7 +70,6 @@
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
     "server-only": "^0.0.1",
-    "tanzanian-phone-validator": "^1.1.5",
     "zod": "link:@hookform/resolvers/zod"
   },
   "devDependencies": {

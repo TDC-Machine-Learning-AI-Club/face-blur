@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
-
 const BASE_URL = 'http://127.0.0.1:8000/'
 
 
