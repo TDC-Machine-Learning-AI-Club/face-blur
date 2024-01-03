@@ -5,8 +5,11 @@ const storage = multer.diskStorage({
       cb(null, '../api/images/input/');
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);
+        let file_name = Date.now() + '-' + file.originalname
+      cb(null, file_name);
+      //ProcessImage(file_name);
     }
+    
   });
   
   // Create the multer instance
