@@ -4,6 +4,13 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 8090;
 
+const upload = require('./upload')
+
+app.post('/image-upload', upload.single('file'), (req, res) => {
+  // Handle the uploaded file
+  res.json({ message: 'File uploaded successfully!' });
+});
+
 // sendFile will go here
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
