@@ -38,7 +38,9 @@ export function Header() {
       <div className="flex items-center">
         <Link className="flex items-center justify-center" href="#">
           <CameraIcon className="h-6 w-6" />
-          <span className="ml-2 text-xl font-bold">FaceBlur AI</span>
+          <span className="ml-2 text-xl font-bold">
+            Face <span className="text-foreground/50">Blur </span>AI
+          </span>
         </Link>
       </div>
       {/* have menu at the center  */}
@@ -72,7 +74,7 @@ export function Header() {
         </a>
 
         <ThemeToggle />
-        <a href="/blur" target="_blank" className={cn(buttonVariants())}>
+        <a href="/blur" className={cn(buttonVariants())}>
           <CameraIcon className=" mr-4" />
           <span className="ml-2 ">Face Blur</span>
         </a>
