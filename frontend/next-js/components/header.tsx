@@ -36,7 +36,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 flex h-16 w-full shrink-0 items-center justify-between border-b bg-gradient-to-b from-background/10 via-background/50 to-background/80 px-4 backdrop-blur-xl">
       <div className="flex items-center">
-        <Link className="flex items-center justify-center" href="#">
+        <Link className="flex items-center justify-center" href="/">
           <CameraIcon className="h-6 w-6" />
           <span className="ml-2 text-xl font-bold">
             Face <span className="text-foreground/50">Blur </span>AI
