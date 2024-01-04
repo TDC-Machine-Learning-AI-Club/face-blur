@@ -31,6 +31,10 @@ async def get_content_type(request: Request):
         raise HTTPException(status_code=415, detail="Unsupported Media Type: Only 'application/json' is supported")
     return content_type
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
 @app.post("/local-blurrer")
 
 async def blur_image(data: dict, content_type: str = Depends(get_content_type)):
