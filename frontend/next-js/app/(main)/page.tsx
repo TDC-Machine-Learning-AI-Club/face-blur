@@ -143,10 +143,10 @@ export default function IndexPage() {
           <section className="w-full pb-6 sm:pb-12 md:pb-16 lg:pb-24">
             <div className="container grid items-center justify-center gap-4 px-4 md:px-6">
               <div className="space-y-3">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter text-foreground md:text-4xl/tight">
                   Request More Information / Contact Us
                 </h2>
-                <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed ">
                   Interested in AI Face Blur for your business? <br /> Do you
                   have any questions or concerns?
                   <br /> Please fill out the form below and we`ll get back to
