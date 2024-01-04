@@ -35,6 +35,7 @@ async def get_content_type(request: Request):
 async def root():
     return {"message": "Hello World"}
 
+@app.post("/image-blurrer")
 
 async def blur_image(data: dict, content_type: str = Depends(get_content_type)):
 
