@@ -20,9 +20,14 @@ export function Footer({ className, ...props }: React.ComponentProps<"p">) {
           )}
           {...props}
         >
-          <ExternalLink href="/"> Open source </ExternalLink> Made with ❤️ in 🇹🇿{" "}
-          <ExternalLink href="https://nextjs.org"> Python </ExternalLink> and{" "}
-          <ExternalLink href="/"> Next.js </ExternalLink>.
+          {" "}
+          <ExternalLink href="/"> Open source </ExternalLink>
+          Made with ❤️ in 🇹🇿 +{" "}
+          <ExternalLink href="https://python.org">
+            {" "}
+            Python{" "}
+          </ExternalLink> and{" "}
+          <ExternalLink href="https://nextjs.org"> Next.js </ExternalLink>.
         </p>
       </div>
       <div className="flex justify-end">
