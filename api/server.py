@@ -31,13 +31,24 @@ async def get_content_type(request: Request):
         raise HTTPException(status_code=415, detail="Unsupported Media Type: Only 'application/json' is supported")
     return content_type
 
+# api key authentication function 
+async def get_api_key(request: Request):
+    """
+    Get the API key from the request headers.
+
+    """
+    api_key = request.headers.get("x-api-key")
+    if api_key != os.environ.get('FRONTEND_API_KEY'):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    return api_key
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
 @app.post("/image-blurrer")
 
-async def blur_image(data: dict, content_type: str = Depends(get_content_type)):
+async def blur_image(data: dict, content_type: str = Depends(get_content_type), api_key: str = Depends(get_api_key)):
 
     '''
     In this route we are expecting something like this
