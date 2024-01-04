@@ -64,6 +64,9 @@ async def blur_image(data: dict, content_type: str = Depends(get_content_type), 
 
         downloaded_file : str  = downloader.download_image(image_url)
 
+        if downloaded_file is None:
+            raise HTTPException(status_code=400, detail="Error downloading image from provided URL")
+            
         image_path = f'images/input/{downloaded_file}' #join the path
         file_extension = get_file_extension(image_path)
         
