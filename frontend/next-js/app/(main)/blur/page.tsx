@@ -4,7 +4,7 @@ export default function IndexPage() {
   return (
     <div className="prose prose-sm prose-invert my-12 text-foreground ">
       <h1 className="text-4xl font-bold text-foreground ">
-        Upload images you want to
+        Upload an Image you want to
         {""}
         <span className=" text-foreground/50"> Blur</span>
       </h1>
