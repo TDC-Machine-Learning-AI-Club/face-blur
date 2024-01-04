@@ -12,7 +12,7 @@ import { blurImage } from "@/actions/blur";
 // Initialize the Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
-const documentBucket = process.env
+const imagesBucket = process.env
   .NEXT_PUBLIC_SUPABASE_PUBLIC_IMAGES_BUCKET as string;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -46,7 +46,7 @@ export default function FileUploadForm() {
 
   const UploadingStateMessages: Record<UploadingState, string> = {
     waiting: "Nice job! Now press upload to upload your image.",
-    success: "Your file has been uploaded successfully.",
+    success: "Your file has been uploaded successfully. You can now blur it.",
     error:
       "There was an error uploading your image. Please try again with a different image.",
     processing: "We are processing your image. Please wait.",
@@ -56,7 +56,8 @@ export default function FileUploadForm() {
   };
 
   const ConvertingStateMessages: Record<ConvertingState, string> = {
-    success: "Your file has been blurred successfully.",
+    success:
+      "Your file has been blurred successfully. See will view and download it below.",
     error:
       "There was an error blurring your image. Please try again with a different image.",
     processing: "We are blurring your image. Please wait.",
@@ -67,17 +68,17 @@ export default function FileUploadForm() {
   const uploadFile = async () => {
     if (file && typeof file !== "string" && typeof file !== "undefined") {
       setUploadingState("waiting");
-      console.log("file", file);
+      // console.log("file", file);
       // Create a unique file name for storage purposes
       const fileName = `${Date.now()}-${file.name}`;
       const extension = file.name.split(".").pop();
       const randomUUID = crypto.randomUUID();
       const filePath = `${randomUUID}.${extension}`;
 
-      console.log("filePath", filePath);
-      console.log("fileName", fileName);
-      console.log("extension", extension);
-      console.log("randomUUID", randomUUID);
+      // console.log("filePath", filePath);
+      // console.log("fileName", fileName);
+      // console.log("extension", extension);
+      // console.log("randomUUID", randomUUID);
 
       try {
         // Use the storage API to upload the file
@@ -85,9 +86,9 @@ export default function FileUploadForm() {
         setProgress(10);
         setUploadingState("uploading");
         const { data, error } = await supabase.storage
-          .from(documentBucket)
+          .from(imagesBucket)
           .upload(filePath, file);
-        console.log("data", data);
+        // console.log("data", data);
 
         if (error) {
           console.error("Error uploading file:", error);
@@ -101,7 +102,7 @@ export default function FileUploadForm() {
         setProgress(40);
         setUploadingState("processing");
         const publicUrl = supabase.storage
-          .from(documentBucket)
+          .from(imagesBucket)
           .getPublicUrl(filePath);
 
         setProgress(60);
@@ -143,19 +144,19 @@ export default function FileUploadForm() {
       const { message, blurred_image_url, conversionId, success } =
         await blurImage(urls?.url as string);
 
-      console.log("success", success);
-      console.log("message", message);
+      // console.log("success", success);
+      // console.log("message", message);
       console.log("blurred_image_url", blurred_image_url);
-      console.log("conversionId", conversionId);
+      // console.log("conversionId", conversionId);
 
       if (!success) {
         setConvertingState("error");
         return;
       }
 
-      console.log("message", message);
-      console.log("blurred_image_url", blurred_image_url);
-      console.log("conversionId", conversionId);
+      // console.log("message", message);
+      // console.log("blurred_image_url", blurred_image_url);
+      // console.log("conversionId", conversionId);
 
       setBlurredUrl(blurred_image_url);
 
@@ -165,6 +166,13 @@ export default function FileUploadForm() {
       setConvertingState("error");
     }
   };
+
+  function download() {
+    const URL = blurredUrl;
+    if (typeof window !== "undefined" && URL) {
+      window.location.href = URL;
+    }
+  }
 
   return (
     <div className="m-6 flex flex-col items-center gap-2 ">
@@ -264,7 +272,12 @@ export default function FileUploadForm() {
         </div>
       </div>
       <div className="mt-8 flex flex-col items-center gap-2">
-        <Button className="w-full max-w-md" variant="outline">
+        <Button
+          className="w-full max-w-md"
+          variant="outline"
+          onClick={download}
+          disabled={convertingState !== "success"}
+        >
           Download Blurred Image
         </Button>
         <Button
