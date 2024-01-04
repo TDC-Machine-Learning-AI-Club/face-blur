@@ -1,4 +1,5 @@
 {
+  "devCommand": "unicorn main:app --host 0.0.0.0 --port $PORT",
   "builds": [
     {
       "src": "/api/server.py",
