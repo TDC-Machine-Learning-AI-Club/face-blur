@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { blurImage } from "@/actions/blur";
 import { saveAs } from "file-saver";
+import { toast } from "react-hot-toast";
+import { InfoIcon } from "lucide-react";
 
 // Initialize the Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -84,6 +86,14 @@ export default function FileUploadForm() {
 
         setProgress(10);
         setUploadingState("uploading");
+        toast.custom(
+          <div className="animate-ease-in-out pointer-events-auto flex max-w-xs items-center gap-1 rounded-md border-primary bg-foreground p-2 text-sm leading-normal text-background shadow-md shadow-transparent duration-500">
+            <InfoIcon className="h-4 w-4 text-violet-500" />
+            <div>We are uploading your image.</div>
+            <div>Please wait.</div>
+          </div>
+        );
+
         const { data, error } = await supabase.storage
           .from(imagesBucket)
           .upload(filePath, file);
@@ -91,7 +101,7 @@ export default function FileUploadForm() {
 
         if (error) {
           console.error("Error uploading file:", error);
-          alert("Error uploading file");
+          toast.error("Error uploading your image. Please try again.");
 
           setProgress(0);
           setUploadingState("error");
@@ -112,14 +122,16 @@ export default function FileUploadForm() {
           thumbnailUrl: publicUrl.data.publicUrl, // Add correctly generated thumbnail URL here if needed
         });
 
-        console.log("publicUrl", publicUrl);
+        // console.log("publicUrl", publicUrl);
         setProgress(100);
         setUploadingState("success");
+        toast.success("Your image has been uploaded successfully.");
       } catch (error) {
         console.log("error on uploadFile", error);
 
         setProgress(0);
         setUploadingState("error");
+        toast.error("Error uploading your image. Please try again.");
 
         // Reset file state after successful upload
         setFile(undefined);
@@ -135,21 +147,32 @@ export default function FileUploadForm() {
     setConvertingState("default");
     setUrls(undefined);
     setBlurredUrl(undefined);
+    toast.success(
+      "Your image has been reset successfully. You can upload another image now."
+    );
   };
 
   const blurTheImage = async () => {
     setConvertingState("processing");
+    toast.custom(
+      <div className="animate-ease-in-out pointer-events-auto flex max-w-xs  items-center gap-1 rounded-md border-primary bg-primary p-2 leading-normal text-foreground shadow-md">
+        <InfoIcon className="h-4 w-4 text-violet-500" />
+        <div>We are blurring your image.</div>
+        <div>Please wait.</div>
+      </div>
+    );
     try {
       const { message, blurred_image_url, conversionId, success } =
         await blurImage(urls?.url as string);
 
       // console.log("success", success);
       // console.log("message", message);
-      console.log("blurred_image_url", blurred_image_url);
+      // console.log("blurred_image_url", blurred_image_url);
       // console.log("conversionId", conversionId);
 
       if (!success) {
         setConvertingState("error");
+        toast.error(message);
         return;
       }
 
@@ -160,9 +183,11 @@ export default function FileUploadForm() {
       setBlurredUrl(blurred_image_url);
 
       setConvertingState("success");
+      toast.success("Your image has been blurred successfully.");
     } catch (error) {
       console.log("error on blurImage", error);
       setConvertingState("error");
+      toast.error("Error blurring your image. Please try again.");
     }
   };
 
@@ -177,6 +202,7 @@ export default function FileUploadForm() {
         : defaultFileName;
 
     saveAs(`${blurredUrl}`, fileName);
+    toast.success("Your image has been downloaded successfully.");
   };
 
   return (
