@@ -92,6 +92,9 @@ dependencies:
   encoding:
     specifier: ^0.1.13
     version: 0.1.13
+  file-saver:
+    specifier: ^2.0.5
+    version: 2.0.5
   focus-trap-react:
     specifier: ^10.1.1
     version: 10.2.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
@@ -172,6 +175,9 @@ devDependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.9
     version: 0.5.10(tailwindcss@3.4.0)
+  '@types/file-saver':
+    specifier: ^2.0.7
+    version: 2.0.7
   '@types/node':
     specifier: ^17.0.45
     version: 17.0.45
@@ -1893,6 +1899,10 @@ packages:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: false
 
+  /@types/file-saver@2.0.7:
+    resolution: {integrity: sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==}
+    dev: true
+
   /@types/hast@2.3.8:
     resolution: {integrity: sha512-aMIqAlFd2wTIDZuvLbhUT+TGvMxrNC8ECUIVtH6xxy0sQLs3iu6NO8Kp/VT5je7i5ufnebXzdV1dNDMnvaH6IQ==}
     dependencies:
@@ -3361,6 +3371,10 @@ packages:
     dependencies:
       flat-cache: 3.2.0
     dev: true
+
+  /file-saver@2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
+    dev: false
 
   /file-selector@0.6.0:
     resolution: {integrity: sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==}

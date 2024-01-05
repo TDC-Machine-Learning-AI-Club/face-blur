@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { createDocument } from "@/actions/document";
 import Image from "next/image";
 import { blurImage } from "@/actions/blur";
+import { saveAs } from "file-saver";
 
 // Initialize the Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -167,12 +168,18 @@ export default function FileUploadForm() {
     }
   };
 
-  function download() {
-    const URL = blurredUrl;
-    if (typeof window !== "undefined" && URL) {
-      window.location.href = URL;
-    }
-  }
+  const saveFile = () => {
+    const defaultFileName = "blurred_image.jpg";
+    const fileName =
+      file && typeof file === "object" && file.name
+        ? `${file.name
+            .split(".")
+            .slice(0, -1)
+            .join(".")}-blurred-${Date.now()}.${file.name.split(".").pop()}`
+        : defaultFileName;
+
+    saveAs(`${blurredUrl}`, fileName);
+  };
 
   return (
     <div className="m-6 flex flex-col items-center gap-2 ">
@@ -275,7 +282,7 @@ export default function FileUploadForm() {
         <Button
           className="w-full max-w-md"
           variant="outline"
-          onClick={download}
+          onClick={saveFile}
           disabled={convertingState !== "success"}
         >
           Download Blurred Image
