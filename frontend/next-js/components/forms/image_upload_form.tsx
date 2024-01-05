@@ -9,6 +9,7 @@ import { blurImage } from "@/actions/blur";
 import { saveAs } from "file-saver";
 import { toast } from "react-hot-toast";
 import { InfoIcon } from "lucide-react";
+import { IconSpinner } from "../ui/icons";
 
 // Initialize the Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -74,7 +75,7 @@ export default function FileUploadForm() {
       const fileName = `${Date.now()}-${file.name}`;
       const extension = file.name.split(".").pop();
       const randomUUID = crypto.randomUUID();
-      const filePath = `${randomUUID}-${fileName}.${extension}`;
+      const filePath = `${randomUUID}-${fileName}`;
 
       // console.log("filePath", filePath);
       // console.log("fileName", fileName);
@@ -87,10 +88,9 @@ export default function FileUploadForm() {
         setProgress(10);
         setUploadingState("uploading");
         toast.custom(
-          <div className="animate-ease-in-out pointer-events-auto flex max-w-xs items-center gap-1 rounded-md border-primary bg-foreground p-2 text-sm leading-normal text-background shadow-md shadow-transparent duration-500">
-            <InfoIcon className="h-4 w-4 text-violet-500" />
-            <div>We are uploading your image.</div>
-            <div>Please wait.</div>
+          <div className="animate-ease-in-out text-md pointer-events-auto m-2 flex max-w-md items-center gap-1 rounded-md border-primary bg-foreground p-2 leading-normal text-background shadow-md shadow-gray-800 duration-500">
+            <IconSpinner className=" mr-1 h-6 w-6 animate-spin  rounded-full text-violet-500" />
+            <span>We are uploading your image. Please wait.</span>
           </div>
         );
 
@@ -125,6 +125,7 @@ export default function FileUploadForm() {
         // console.log("publicUrl", publicUrl);
         setProgress(100);
         setUploadingState("success");
+        setConvertingState("waiting");
         toast.success("Your image has been uploaded successfully.");
       } catch (error) {
         console.log("error on uploadFile", error);
@@ -155,10 +156,9 @@ export default function FileUploadForm() {
   const blurTheImage = async () => {
     setConvertingState("processing");
     toast.custom(
-      <div className="animate-ease-in-out pointer-events-auto flex max-w-xs  items-center gap-1 rounded-md border-primary bg-primary p-2 leading-normal text-foreground shadow-md">
-        <InfoIcon className="h-4 w-4 text-violet-500" />
-        <div>We are blurring your image.</div>
-        <div>Please wait.</div>
+      <div className="animate-ease-in-out text-md pointer-events-auto m-2 flex max-w-md items-center gap-1 rounded-md border-primary bg-foreground p-2 leading-normal text-background shadow-md shadow-gray-800 duration-500">
+        <IconSpinner className="mr-1 h-6 w-6 animate-spin rounded-full  text-violet-500" />
+        <span>We are blurring your image. Please wait.</span>
       </div>
     );
     try {
@@ -249,7 +249,7 @@ export default function FileUploadForm() {
       </div>
 
       <Button
-        className="rounded bg-secondary px-2 text-primary hover:opacity-80"
+        className="w-full max-w-md"
         onClick={uploadFile}
         disabled={!file || uploadingState === "success" || progress > 0}
       >
@@ -264,25 +264,24 @@ export default function FileUploadForm() {
         }
       </div>
 
-      {/* Blur image button */}
-
       <Button
-        className="rounded bg-secondary px-2 text-primary hover:opacity-80"
+        className="w-full max-w-md"
         onClick={blurTheImage}
         disabled={
           !urls ||
           convertingState === "success" ||
           uploadingState !== "success" ||
-          convertingState === "processing" ||
-          convertingState === "waiting"
+          convertingState === "processing"
         }
       >
         Blur
       </Button>
 
-      <div className="mx-auto  grid w-full max-w-2xl gap-4 sm:grid-cols-2">
+      <div className="mx-auto  grid w-full max-w-2xl gap-4 text-foreground sm:grid-cols-2">
         <div className="flex flex-col items-center">
-          <h2 className="mb-4 text-2xl font-bold">Original Image</h2>
+          <h2 className="mb-4 text-2xl font-bold text-foreground">
+            Original Image
+          </h2>
           <Image
             alt="Original Image"
             className="aspect-square w-full overflow-hidden rounded-lg border border-gray-200 object-cover dark:border-gray-800"
@@ -292,7 +291,9 @@ export default function FileUploadForm() {
           />
         </div>
         <div className="flex flex-col items-center">
-          <h2 className="mb-4 text-2xl font-bold">Blurred Image</h2>
+          <h2 className="mb-4 text-2xl font-bold text-foreground">
+            Blurred Image
+          </h2>
           <Image
             alt="Blurred Image"
             className="aspect-square w-full overflow-hidden rounded-lg border border-gray-200 object-cover dark:border-gray-800"
