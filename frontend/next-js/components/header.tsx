@@ -38,7 +38,7 @@ export function Header() {
       <div className="flex items-center">
         <Link className="flex items-center justify-center" href="/">
           <CameraIcon className="h-6 w-6" />
-          <span className="ml-2 text-xl font-bold">
+          <span className="ml-2 hidden text-xl font-bold sm:flex">
             Face <span className="text-foreground/50">Blur </span>AI
           </span>
         </Link>
