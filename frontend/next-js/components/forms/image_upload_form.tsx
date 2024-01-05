@@ -2,10 +2,8 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { SingleDocumentDropZone } from "@/components/document-drop-zone";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { createDocument } from "@/actions/document";
 import Image from "next/image";
 import { blurImage } from "@/actions/blur";
 import { saveAs } from "file-saver";
@@ -58,7 +56,7 @@ export default function FileUploadForm() {
 
   const ConvertingStateMessages: Record<ConvertingState, string> = {
     success:
-      "Your file has been blurred successfully. See will view and download it below.",
+      "Your file has been blurred successfully. See will view and download it below. To blur another image, please click Reset.",
     error:
       "There was an error blurring your image. Please try again with a different image.",
     processing: "We are blurring your image. Please wait.",
@@ -74,7 +72,7 @@ export default function FileUploadForm() {
       const fileName = `${Date.now()}-${file.name}`;
       const extension = file.name.split(".").pop();
       const randomUUID = crypto.randomUUID();
-      const filePath = `${randomUUID}.${extension}`;
+      const filePath = `${randomUUID}-${fileName}.${extension}`;
 
       // console.log("filePath", filePath);
       // console.log("fileName", fileName);
@@ -227,7 +225,7 @@ export default function FileUploadForm() {
       <Button
         className="rounded bg-secondary px-2 text-primary hover:opacity-80"
         onClick={uploadFile}
-        disabled={!file || uploadingState === "success"}
+        disabled={!file || uploadingState === "success" || progress > 0}
       >
         Upload
       </Button>
