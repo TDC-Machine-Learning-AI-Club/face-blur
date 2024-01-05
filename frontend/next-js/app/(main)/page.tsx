@@ -41,7 +41,7 @@ export default function IndexPage() {
                   alt="Hero"
                   className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
                   height="550"
-                  src="/billgatesheadshot.jpg"
+                  src="/black-boy.jpeg"
                   width="550"
                 />
               </div>
