@@ -75,8 +75,8 @@ export function Header() {
 
         <ThemeToggle />
         <a href="/blur" className={cn(buttonVariants())}>
-          <CameraIcon className=" mr-4" />
-          <span className="ml-2 ">Face Blur</span>
+          {/* <CameraIcon className=" mr-4" /> */}
+          <span className="">Face Blur</span>
         </a>
         {/* <SidebarMobile>
           <span className="flex-1 overflow-auto" />
