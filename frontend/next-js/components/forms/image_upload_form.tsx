@@ -75,6 +75,7 @@ export default function FileUploadForm() {
       const fileName = `${Date.now()}-${file.name}`;
       const extension = file.name.split(".").pop();
       const randomUUID = crypto.randomUUID();
+      const filePath = `${randomUUID}-${fileName}`;
 
       // console.log("filePath", filePath);
       // console.log("fileName", fileName);
