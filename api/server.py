@@ -31,30 +31,48 @@ async def get_content_type(request: Request):
         raise HTTPException(status_code=415, detail="Unsupported Media Type: Only 'application/json' is supported")
     return content_type
 
-@app.post("/local-blurrer")
+# api key authentication function 
+async def get_api_key(request: Request):
+    """
+    Get the API key from the request headers.
 
-async def blur_image(data: dict, content_type: str = Depends(get_content_type)):
+    """
+    api_key = request.headers.get("x-api-key")
+    if api_key != os.environ.get('FRONTEND_API_KEY'):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    return api_key
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+@app.post("/image-blurrer")
+
+async def blur_image(data: dict, content_type: str = Depends(get_content_type), api_key: str = Depends(get_api_key)):
 
     '''
     In this route we are expecting something like this
     {
-        "image_source": "DALL-E-girl.png" OR "image_source": "https://myimages.com/blur-me.jpg"
+        "image_url": "DALL-E-girl.png" OR "image_url": "https://myimages.com/blur-me.jpg"
     }
     Obviously we will add more support for file uploading and url downloading
     '''
 
-    image_source = data["image_source"] # get the image name from post request
+    image_url = data["image_url"] # get the image name from post request
 
-    if is_valid_url(image_source):
+    if is_valid_url(image_url):
 
-        downloaded_file : str  = downloader.download_image(image_source)
+        downloaded_file : str  = downloader.download_image(image_url)
 
+        if downloaded_file is None:
+            raise HTTPException(status_code=400, detail="Error downloading image from provided URL")
+            
         image_path = f'images/input/{downloaded_file}' #join the path
         file_extension = get_file_extension(image_path)
         
-    elif not is_valid_url(image_source):
+    elif not is_valid_url(image_url):
 
-        image_path = f'images/input/{image_source}' #join the path
+        image_path = f'images/input/{image_url}' #join the path
         file_extension = get_file_extension(image_path)
 
     else:
@@ -74,7 +92,7 @@ async def blur_image(data: dict, content_type: str = Depends(get_content_type)):
     end_time = time.time()
     elapsed_time = end_time - start_time
     
-    img_public_url = upload_image_files(output_path)
+    blurred_image_url = upload_image_files(output_path)
     os.remove(output_path)
     os.remove(image_path)
-    return {"message": "process_completed", "public_url": img_public_url, "elapsed_time": elapsed_time}
+    return {"message": "process_completed", "public_url": blurred_image_url, "elapsed_time": elapsed_time}

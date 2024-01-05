@@ -1,0 +1,15 @@
+{
+  "devCommand": "unicorn main:app --host 0.0.0.0 --port $PORT",
+  "builds": [
+    {
+      "src": "server.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.py"
+    }
+  ]
+}
