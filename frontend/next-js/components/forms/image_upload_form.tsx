@@ -2,12 +2,13 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { SingleDocumentDropZone } from "@/components/document-drop-zone";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { createDocument } from "@/actions/document";
 import Image from "next/image";
 import { blurImage } from "@/actions/blur";
+import { saveAs } from "file-saver";
+import { toast } from "react-hot-toast";
+import { InfoIcon } from "lucide-react";
 
 // Initialize the Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -57,7 +58,7 @@ export default function FileUploadForm() {
 
   const ConvertingStateMessages: Record<ConvertingState, string> = {
     success:
-      "Your file has been blurred successfully. See will view and download it below.",
+      "Your file has been blurred successfully. See will view and download it below. To blur another image, please click Reset.",
     error:
       "There was an error blurring your image. Please try again with a different image.",
     processing: "We are blurring your image. Please wait.",
@@ -73,7 +74,7 @@ export default function FileUploadForm() {
       const fileName = `${Date.now()}-${file.name}`;
       const extension = file.name.split(".").pop();
       const randomUUID = crypto.randomUUID();
-      const filePath = `${randomUUID}.${extension}`;
+      const filePath = `${randomUUID}-${fileName}.${extension}`;
 
       // console.log("filePath", filePath);
       // console.log("fileName", fileName);
@@ -85,6 +86,14 @@ export default function FileUploadForm() {
 
         setProgress(10);
         setUploadingState("uploading");
+        toast.custom(
+          <div className="animate-ease-in-out pointer-events-auto flex max-w-xs items-center gap-1 rounded-md border-primary bg-foreground p-2 text-sm leading-normal text-background shadow-md shadow-transparent duration-500">
+            <InfoIcon className="h-4 w-4 text-violet-500" />
+            <div>We are uploading your image.</div>
+            <div>Please wait.</div>
+          </div>
+        );
+
         const { data, error } = await supabase.storage
           .from(imagesBucket)
           .upload(filePath, file);
@@ -92,7 +101,7 @@ export default function FileUploadForm() {
 
         if (error) {
           console.error("Error uploading file:", error);
-          alert("Error uploading file");
+          toast.error("Error uploading your image. Please try again.");
 
           setProgress(0);
           setUploadingState("error");
@@ -113,14 +122,16 @@ export default function FileUploadForm() {
           thumbnailUrl: publicUrl.data.publicUrl, // Add correctly generated thumbnail URL here if needed
         });
 
-        console.log("publicUrl", publicUrl);
+        // console.log("publicUrl", publicUrl);
         setProgress(100);
         setUploadingState("success");
+        toast.success("Your image has been uploaded successfully.");
       } catch (error) {
         console.log("error on uploadFile", error);
 
         setProgress(0);
         setUploadingState("error");
+        toast.error("Error uploading your image. Please try again.");
 
         // Reset file state after successful upload
         setFile(undefined);
@@ -136,21 +147,32 @@ export default function FileUploadForm() {
     setConvertingState("default");
     setUrls(undefined);
     setBlurredUrl(undefined);
+    toast.success(
+      "Your image has been reset successfully. You can upload another image now."
+    );
   };
 
   const blurTheImage = async () => {
     setConvertingState("processing");
+    toast.custom(
+      <div className="animate-ease-in-out pointer-events-auto flex max-w-xs  items-center gap-1 rounded-md border-primary bg-primary p-2 leading-normal text-foreground shadow-md">
+        <InfoIcon className="h-4 w-4 text-violet-500" />
+        <div>We are blurring your image.</div>
+        <div>Please wait.</div>
+      </div>
+    );
     try {
       const { message, blurred_image_url, conversionId, success } =
         await blurImage(urls?.url as string);
 
       // console.log("success", success);
       // console.log("message", message);
-      console.log("blurred_image_url", blurred_image_url);
+      // console.log("blurred_image_url", blurred_image_url);
       // console.log("conversionId", conversionId);
 
       if (!success) {
         setConvertingState("error");
+        toast.error(message);
         return;
       }
 
@@ -161,18 +183,27 @@ export default function FileUploadForm() {
       setBlurredUrl(blurred_image_url);
 
       setConvertingState("success");
+      toast.success("Your image has been blurred successfully.");
     } catch (error) {
       console.log("error on blurImage", error);
       setConvertingState("error");
+      toast.error("Error blurring your image. Please try again.");
     }
   };
 
-  function download() {
-    const URL = blurredUrl;
-    if (typeof window !== "undefined" && URL) {
-      window.location.href = URL;
-    }
-  }
+  const saveFile = () => {
+    const defaultFileName = "blurred_image.jpg";
+    const fileName =
+      file && typeof file === "object" && file.name
+        ? `${file.name
+            .split(".")
+            .slice(0, -1)
+            .join(".")}-blurred-${Date.now()}.${file.name.split(".").pop()}`
+        : defaultFileName;
+
+    saveAs(`${blurredUrl}`, fileName);
+    toast.success("Your image has been downloaded successfully.");
+  };
 
   return (
     <div className="m-6 flex flex-col items-center gap-2 ">
@@ -220,7 +251,7 @@ export default function FileUploadForm() {
       <Button
         className="rounded bg-secondary px-2 text-primary hover:opacity-80"
         onClick={uploadFile}
-        disabled={!file || uploadingState === "success"}
+        disabled={!file || uploadingState === "success" || progress > 0}
       >
         Upload
       </Button>
@@ -275,7 +306,7 @@ export default function FileUploadForm() {
         <Button
           className="w-full max-w-md"
           variant="outline"
-          onClick={download}
+          onClick={saveFile}
           disabled={convertingState !== "success"}
         >
           Download Blurred Image

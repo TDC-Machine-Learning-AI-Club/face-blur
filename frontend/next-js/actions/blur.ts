@@ -57,11 +57,13 @@ export async function blurImage(
           success: true,
           blurred_image_url: data.output_url,
           conversionId: saveConversionResponse.conversionId,
+          message: "Image blurred successfully",
         };
       } else {
         return {
           success: false,
           message: "Error saving conversion",
+          blurred_image_url: null,
         };
       }
     } else {

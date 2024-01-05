@@ -61,3 +61,9 @@ This Project was built by DTC members and contributors:
 
 - [Fredy German](https://twitter.com/fredygermanm)
 - etc.
+
+## Credits
+
+Images from [Unsplash](https://unsplash.com/) and [Dall-E](https://labs.openai.com/).
+
+<!-- https://unsplash.com/photos/selective-focus-photography-of-man-in-gray-crew-neck-shirt-Ve7xjKImd28 -->
