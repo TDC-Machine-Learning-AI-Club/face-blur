@@ -36,13 +36,11 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? (
-        <script
+       <script
           async
           src="https://analytics.eu.umami.is/script.js"
           data-website-id="d7f812b0-03e8-4347-b598-d1420899a98c"
         />
-      ) : null}
       <head />
       <body
         className={cn(
