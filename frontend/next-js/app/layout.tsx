@@ -9,10 +9,10 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
 export const metadata = {
-  metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
+  metadataBase: new URL(https://${process.env.VERCEL_URL}),
   title: {
     default: "Face Blur AI",
-    template: `%s | Face Blur AI`,
+    template: %s | Face Blur AI,
   },
   description: "An AI that blurs faces in images",
   icons: {
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <script
           async
           src="https://analytics.eu.umami.is/script.js"
-          data-website-id={`${process.env.UMAMI_ANALYTICS_ID}`}
+          data-website-id={${process.env.UMAMI_ANALYTICS_ID}}
         />
       ) : null}
       <head />
@@ -67,6 +67,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <TailwindIndicator />
         </Providers>
       </body>
-    </html>
-  );
+    </html>
+  );
 }
