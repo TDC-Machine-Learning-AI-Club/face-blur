@@ -1,1 +1,7 @@
 sample_videos/
+.env
+*.pyc
+frontend/next-js/node_modules/*
+frontend/next-js/.next/*
+frontend/next-js/out/*
+frontend/next-js/.env
