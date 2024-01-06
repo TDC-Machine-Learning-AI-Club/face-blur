@@ -110,19 +110,21 @@ export default function FileUploadForm() {
 
         setProgress(40);
         setUploadingState("processing");
-        const publicUrl = supabase.storage
+        const storageUploadResponse = supabase.storage
           .from(imagesBucket)
           .getPublicUrl(filePath);
 
         setProgress(60);
         setUploadingState("saving");
 
+        // console.log("storageUploadResponse", storageUploadResponse);
+
         setUrls({
-          url: publicUrl.data.publicUrl,
-          thumbnailUrl: publicUrl.data.publicUrl, // Add correctly generated thumbnail URL here if needed
+          url: storageUploadResponse.data.publicUrl,
+          thumbnailUrl: storageUploadResponse.data.publicUrl, // Add correctly generated thumbnail URL here if needed
         });
 
-        // console.log("publicUrl", publicUrl);
+        // console.log("storageUploadResponse", storageUploadResponse);
         setProgress(100);
         setUploadingState("success");
         setConvertingState("waiting");
