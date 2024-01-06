@@ -66,7 +66,7 @@ export function Header() {
         </React.Suspense>
         <a
           target="_blank"
-          href="https://github.com/"
+          href="https://github.com/TDC-Machine-Learning-AI-Club/face-blur"
           rel="noopener noreferrer"
           className={cn(buttonVariants({ variant: "outline" }))}
         >
