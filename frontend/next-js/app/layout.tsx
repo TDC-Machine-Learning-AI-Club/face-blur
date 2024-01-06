@@ -40,7 +40,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <script
           async
           src="https://analytics.eu.umami.is/script.js"
-          data-website-id={`${process.env.UMAMI_ANALYTICS_ID}`}
+          data-website-id="5119ab7f-61f5-4740-987c-74f8c3574a76"
         />
       ) : null}
       <head />
