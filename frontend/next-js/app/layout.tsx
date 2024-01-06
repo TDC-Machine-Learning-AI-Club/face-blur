@@ -36,6 +36,14 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
+      {process.env.NODE_ENV === "production" ? (
+        <script
+          async
+          src="https://analytics.eu.umami.is/script.js"
+          data-website-id={`${process.env.UMAMI_ANALYTICS_ID}`}
+        />
+      ) : null}
+      <head />
       <body
         className={cn(
           "font-sans antialiased",
