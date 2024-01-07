@@ -10,12 +10,12 @@ import { Footer } from "@/components/footer";
 import { siteConfig } from "@/config/site";
 
 export const metadata = {
-  metadataBase: `${process.env.NEXT_PUBLIC_VERCEL_URL}`,
+  metadataBase: new URL(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`),
   title: {
-    default: `${siteConfig.title}`,
+    default: `${siteConfig.title} | Face Blur AI`,
     template: `%s | ${siteConfig.title}`,
   },
-  description: `${siteConfig.description}`,
+  description: siteConfig.description,
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
@@ -68,7 +68,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <TailwindIndicator />
         </Providers>
       </body>
-        
     </html>
   );
 }

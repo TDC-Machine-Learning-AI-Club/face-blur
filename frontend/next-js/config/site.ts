@@ -1,5 +1,6 @@
-import { version } from "../package.json";
+import packageJson from "../package.json";
 
+const { version } = packageJson;
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
