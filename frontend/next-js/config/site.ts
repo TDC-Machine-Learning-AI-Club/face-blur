@@ -5,7 +5,7 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   title: "Face Blur AI",
-  name: "",
+  name: "Face Blur AI",
   description: "An AI that blurs faces in images.",
   domain: `${process.env.NEXT_PUBLIC_VERCEL_URL}`,
   githubUrl: "https://github.com/TDC-Machine-Learning-AI-Club/face-blur",
