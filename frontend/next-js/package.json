@@ -4,6 +4,7 @@
   "description": "Face Blur is a tool that allows you to blur faces in images. It uses AI to detect faces and blur them.",
   "author": "Fredy German",
   "private": true,
+  "resolveJsonModule": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
