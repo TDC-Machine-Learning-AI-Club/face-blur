@@ -60,7 +60,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex min-h-screen flex-col">
-            {/* @ts-ignore */}
+            {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" ? (
+              <div className="flex h-4 w-full items-center justify-center bg-violet-500 text-xs font-bold text-primary">
+                Development Environment
+              </div>
+            ) : null}
             <Header />
             <main className="flex flex-1 flex-col bg-muted/50">{children}</main>
             <Footer />
