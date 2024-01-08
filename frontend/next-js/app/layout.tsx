@@ -42,6 +42,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           async
           src="https://analytics.eu.umami.is/script.js"
           data-website-id={`${process.env.UMAMI_ANALYTICS_ID}`}
+
         />
       ) : null}
       <head />
@@ -72,6 +73,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <TailwindIndicator />
         </Providers>
       </body>
-    </html>
-  );
+    </html>
+  );
 }

@@ -92,9 +92,8 @@ async def blur_image(data: dict, content_type: str = Depends(get_content_type), 
     end_time = time.time()
     elapsed_time = end_time - start_time
     
-    blurred_image_url = upload_image_files(output_path)
-#    remove ? on blurred_image_url
-    blurred_image_url = blurred_image_url.replace("?","")
+    blurred_image_url = upload_image_files(output_path).replace("?", "") #remove ? on blurred_image_url
+    
     os.remove(output_path)
     os.remove(image_path)
     return {"message": "process_completed", "public_url": blurred_image_url, "elapsed_time": elapsed_time}
