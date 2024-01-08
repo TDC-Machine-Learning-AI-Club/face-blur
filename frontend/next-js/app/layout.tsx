@@ -7,14 +7,15 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { siteConfig } from "@/config/site";
 
 export const metadata = {
-  metadataBase: new URL(https://${process.env.VERCEL_URL}),
+  metadataBase: new URL(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`),
   title: {
-    default: "Face Blur AI",
-    template: %s | Face Blur AI,
+    default: `${siteConfig.title} | Face Blur AI`,
+    template: `%s | ${siteConfig.title}`,
   },
-  description: "An AI that blurs faces in images",
+  description: siteConfig.description,
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
@@ -36,11 +37,12 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {process.env.NODE_ENV === "production" ? (
+      {process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? (
         <script
           async
           src="https://analytics.eu.umami.is/script.js"
-          data-website-id={${process.env.UMAMI_ANALYTICS_ID}}
+          data-website-id={`${process.env.UMAMI_ANALYTICS_ID}`}
+
         />
       ) : null}
       <head />
@@ -59,7 +61,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex min-h-screen flex-col">
-            {/* @ts-ignore */}
+            {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" ? (
+              <div className="flex h-4 w-full items-center justify-center bg-violet-500 text-xs font-bold text-primary">
+                Development Environment
+              </div>
+            ) : null}
             <Header />
             <main className="flex flex-1 flex-col bg-muted/50">{children}</main>
             <Footer />
