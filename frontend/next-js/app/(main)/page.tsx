@@ -48,7 +48,7 @@ export default function IndexPage() {
             </div>
           </section>
 
-          <section className="w-full w-full bg-gray-100 py-6 sm:py-12 md:py-16 lg:py-24 dark:bg-gray-800 ">
+          <section className="w-full  bg-gray-100 py-6 sm:py-12 md:py-16 lg:py-24 dark:bg-gray-800 ">
             <div className="container px-4 md:px-6">
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <div className="space-y-2">

@@ -12,6 +12,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { UserMenu } from "@/components/user-menu";
 import { SidebarMobile } from "./sidebar-mobile";
 import { cookies } from "next/headers";
+import { siteConfig } from "@/config/site";
 
 async function UserOrLogin() {
   const cookieStore = cookies();
@@ -66,7 +67,7 @@ export function Header() {
         </React.Suspense>
         <a
           target="_blank"
-          href="https://github.com/TDC-Machine-Learning-AI-Club/face-blur"
+          href={`${siteConfig.githubUrl}`}
           rel="noopener noreferrer"
           className={cn(buttonVariants({ variant: "outline" }))}
         >
